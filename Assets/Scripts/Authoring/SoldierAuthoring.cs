@@ -3,38 +3,20 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class SoldierAuthoringAuthoring : MonoBehaviour
+    public class SoldierAuthoring : MonoBehaviour
     {
-        public Vector3 initialPos;
-        public int initialRadius;
         public int team;
-        private class SoldierAuthoringBaker : Baker<SoldierAuthoringAuthoring>
+        private class SoldierAuthoringBaker : Baker<SoldierAuthoring>
         {
-            public override void Bake(SoldierAuthoringAuthoring authoring)
+            public override void Bake(SoldierAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Renderable);
-                AddComponent(entity, new Soldier
-                {
-                    InitialPos = authoring.initialPos,
-                    InitialRadius = authoring.initialRadius
-                });
                 
+                if (authoring.team == (int)SpawnerAuthoring.Teams.TeamA) AddComponent(entity, new SoldierTeamA());
+                if (authoring.team == (int)SpawnerAuthoring.Teams.TeamB) AddComponent(entity, new SoldierTeamB());
+                    
                 AddComponent(entity, new SoldierOrientation());
-                // TODO remove Soldier component 
-                // add others Component 
-                if (authoring.team == 0)
-                {
-                    AddComponent(entity, new SoldierTeamA()
-                    {
-                    });
-                }
-                if (authoring.team == 1)
-                {
-                    AddComponent(entity, new SoldierTeamB()
-                    {
-                    });
-                }
-                
+                AddComponent(entity, new Soldier ());
                 AddComponent(entity, new SoldierAlive{ Value = 1 });
                 
             }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 711309553}
   - component: {fileID: 711309554}
   m_Layer: 0
-  m_Name: ConfigA
+  m_Name: SpawnerA
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 711309552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: -0.09}
+  m_LocalPosition: {x: 32, y: 0, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,6 +170,7 @@ MonoBehaviour:
   prefab: {fileID: 6881875341331461950, guid: c17f23d202a66433289fb241fbf57aa9, type: 3}
   count: 7000
   initialRadius: 100
+  initialPosition: {x: 0, y: 0, z: 0}
   team: 0
 --- !u!1 &1097622816
 GameObject:
@@ -288,7 +289,7 @@ GameObject:
   - component: {fileID: 1569234403}
   - component: {fileID: 1569234402}
   m_Layer: 0
-  m_Name: ConfigA
+  m_Name: SpawnerB
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   prefab: {fileID: 9144840006293953596, guid: 0ded46c95a79f42a9a65ea99fe80dc96, type: 3}
   count: 7000
   initialRadius: 100
+  initialPosition: {x: 0, y: 0, z: 0}
   team: 1
 --- !u!4 &1569234403
 Transform:
@@ -319,7 +321,7 @@ Transform:
   m_GameObject: {fileID: 1569234401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: -22.9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
