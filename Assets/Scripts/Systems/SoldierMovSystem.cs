@@ -5,15 +5,20 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
+
 
 public partial struct SoldierMovSystem : ISystem
 {
     private ComponentLookup<LocalTransform> m_AllSoldiers;
+
+    public Random Random;
     
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         m_AllSoldiers = SystemAPI.GetComponentLookup<LocalTransform>(true);
+        Random = new Random((uint)state.WorldUnmanaged.Time.ElapsedTime + 1234);
     }
     
     [BurstCompile]
@@ -33,7 +38,8 @@ public partial struct SoldierMovSystem : ISystem
     
         new SoldierMovSystemJob
         {
-            DeltaTime = Time.deltaTime
+            DeltaTime = Time.deltaTime,
+            Random = Random
         }.Schedule(  );
     
     }
@@ -75,9 +81,11 @@ public partial struct SoldierOrientationJob : IJobEntity
 public partial struct SoldierMovSystemJob : IJobEntity
 {
     public float DeltaTime;
+    public Random Random;
     public void Execute(ref LocalTransform translation, [ReadOnly]ref SoldierOrientation soldierOrientation)
     {
-        translation.Position += soldierOrientation.Value * DeltaTime * 10;
+        var randomSpeed = Random.NextFloat(5, 20);
+        translation.Position += soldierOrientation.Value * DeltaTime * randomSpeed;
     }
 }
 

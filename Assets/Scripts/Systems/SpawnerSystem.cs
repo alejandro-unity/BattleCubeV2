@@ -48,7 +48,9 @@ public partial struct SpawnerSystem : ISystem
                     {
                         random = Random, 
                         circle = spawner.ValueRO.InitialRadius,
-                        initialPosition = spawner.ValueRO.InitialPosition
+                        initialPosition = spawner.ValueRO.InitialPosition,
+                        is3DMov = spawner.ValueRO.is3DMov
+
                     };
 
                     // Create a query that includes both the Solider and the LocalTransform components
@@ -80,6 +82,7 @@ partial struct SetEntityPositionJob: IJobEntity
     public Random random;
     public int circle;
     public float3 initialPosition;
+    public int is3DMov;
 
     [BurstCompile]
     public void Execute( ref LocalTransform transform, in Soldier soldier )
@@ -89,6 +92,8 @@ partial struct SetEntityPositionJob: IJobEntity
         float randomRadius = random.NextFloat(0, circle);
         float x = initialPosition.x + randomRadius * math.cos(randomAngle);
         float z = initialPosition.z + randomRadius * math.sin(randomAngle);
-        transform.Position = new float3(x,0,z);
+        float y = 0;
+        if(is3DMov == 1) y = random.NextFloat(0, circle);
+        transform.Position = new float3(x,y,z);
     }
 }

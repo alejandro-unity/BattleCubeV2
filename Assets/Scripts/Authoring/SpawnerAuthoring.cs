@@ -11,7 +11,7 @@ public class SpawnerAuthoring : MonoBehaviour
     public GameObject prefab;
     public int count;
     public int initialRadius;
-    public Vector3 initialPosition;
+    public int is3DMov;
     public Teams team;
     // Create an entity that has the prefabs 
     private class ConfigAuthoringBaker : Baker<SpawnerAuthoring>
@@ -25,7 +25,8 @@ public class SpawnerAuthoring : MonoBehaviour
                 Count = authoring.count,
                 Team = (int)authoring.team, 
                 InitialRadius = authoring.initialRadius,
-                InitialPosition =  authoring.transform.position
+                InitialPosition =  authoring.transform.position,
+                is3DMov = authoring.is3DMov
             });
         }
     }
@@ -60,4 +61,5 @@ public struct Spawner : IComponentData
     public int InitialRadius;
     public float3 InitialPosition;
     public int Team;
+    public int is3DMov;
 }

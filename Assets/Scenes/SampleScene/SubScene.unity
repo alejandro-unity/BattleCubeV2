@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 6881875341331461950, guid: c17f23d202a66433289fb241fbf57aa9, type: 3}
-  count: 7000
-  initialRadius: 100
-  initialPosition: {x: 0, y: 0, z: 0}
+  count: 500
+  initialRadius: 1000
+  is3DMov: 0
   team: 0
 --- !u!1 &1097622816
 GameObject:
@@ -308,9 +308,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 9144840006293953596, guid: 0ded46c95a79f42a9a65ea99fe80dc96, type: 3}
-  count: 7000
-  initialRadius: 100
-  initialPosition: {x: 0, y: 0, z: 0}
+  count: 500
+  initialRadius: 1000
+  is3DMov: 0
   team: 1
 --- !u!4 &1569234403
 Transform:
