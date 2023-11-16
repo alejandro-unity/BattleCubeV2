@@ -6,6 +6,7 @@ namespace DefaultNamespace
     public class SoldierAuthoringAuthoring : MonoBehaviour
     {
         public Vector3 initialPos;
+        public int initialRadius;
         public int team;
         private class SoldierAuthoringBaker : Baker<SoldierAuthoringAuthoring>
         {
@@ -14,7 +15,8 @@ namespace DefaultNamespace
                 var entity = GetEntity(TransformUsageFlags.Renderable);
                 AddComponent(entity, new Soldier
                 {
-                    initialPos = authoring.initialPos
+                    InitialPos = authoring.initialPos,
+                    InitialRadius = authoring.initialRadius
                 });
                 
                 AddComponent(entity, new SoldierOrientation());

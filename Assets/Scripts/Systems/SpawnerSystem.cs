@@ -15,6 +15,7 @@ public partial struct SpawnerSystem : ISystem
 {   
     public Random Random;
     public EntityQuery Query;
+    public JobHandle handle;
 
     public void OnCreate(ref SystemState state)
     {
@@ -30,22 +31,17 @@ public partial struct SpawnerSystem : ISystem
         var soldierQuery = SystemAPI.QueryBuilder().WithAll<Soldier>().Build();
         if (soldierQuery.IsEmpty)
         {
-            foreach (var (spawner, entity) in
-                     SystemAPI.Query<RefRO<Spawner>>().WithEntityAccess())
-
+            foreach (var (spawner, entity) in SystemAPI.Query<RefRO<Spawner>>().WithEntityAccess())
             {
-                var entities =
-                    CollectionHelper.CreateNativeArray<Entity, RewindableAllocator>(spawner.ValueRO.Count,
-                        ref state.WorldUnmanaged.UpdateAllocator);
+                var entities = CollectionHelper.CreateNativeArray<Entity, RewindableAllocator>(spawner.ValueRO.Count,ref state.WorldUnmanaged.UpdateAllocator);
                 // Create a lot of entities ! 
                 state.EntityManager.Instantiate(spawner.ValueRO.Prefab, entities);
-                var setEntityPosition = new SetEntityPositionJob
-                {
-                    random = Random, circle = spawner.ValueRO.initialRadius
-                };
-                setEntityPosition.ScheduleParallel();
             }
+            // this job need to  be out the foreach loop
+            var setPosJob = new SetEntityPositionJob { random = Random };
+            setPosJob.ScheduleParallel();
         }
+        
     }
     private EntityCommandBuffer.ParallelWriter GetEntityCommandBuffer(ref SystemState state)
     {
@@ -60,16 +56,15 @@ public partial struct SpawnerSystem : ISystem
 partial struct SetEntityPositionJob: IJobEntity
 {
     public Random random;
-    public int circle;
     
     [BurstCompile]
     public void Execute( ref LocalTransform transform, in Soldier soldier )
     {
         // Generate a random angle in radians
         float randomAngle = random.NextFloat(0, 2 * math.PI);
-        float randomRadius = random.NextFloat(0, circle);
-        float x = soldier.initialPos.x + randomRadius * math.cos(randomAngle);
-        float z = soldier.initialPos.z + randomRadius * math.sin(randomAngle);
+        float randomRadius = random.NextFloat(0, soldier.InitialRadius);
+        float x = soldier.InitialPos.x + randomRadius * math.cos(randomAngle);
+        float z = soldier.InitialPos.z + randomRadius * math.sin(randomAngle);
         transform.Position = new float3(x,0,z);
     }
 }

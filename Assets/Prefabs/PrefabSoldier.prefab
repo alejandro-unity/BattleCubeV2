@@ -119,4 +119,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPos: {x: 70, y: 0, z: 0}
+  initialRadius: 50
   team: 0
